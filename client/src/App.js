@@ -58,6 +58,29 @@ function App() {
   useEffect(() => {
     localStorage.setItem("cards", JSON.stringify(cards));
   }, [cards]);
+  useEffect(() => {
+  if (points > 0 && points % 50 === 0) {
+    alert("🎉 LEVEL UP!");
+  }
+}, [points]);
+
+// ======================
+// USER (LOGIN STATE)
+// ======================
+
+// Store the current user 
+const [user, setUser] = useState(() => {
+  return localStorage.getItem("user") || "";
+});
+
+// function to log user in
+const handleLogin = (name) => {
+  if (!name) return; // don't allow empty name
+
+  localStorage.setItem("user", name); // save name
+  setUser(name); // update state
+};
+
 
   // ======================
   // TASKS
@@ -86,9 +109,10 @@ function App() {
     setTasks(updatedTasks);
 
     if (completedNow) {
-      setPoints((prev) => prev + 10);
-      setTasksCompletedToday((prev) => prev + 1);
-    }
+    setPoints((prev) => prev + 10);
+    setTasksCompletedToday((prev) => prev + 1);
+   alert("✅ +10 XP Task completed!");
+  }
   };
 
   const deleteTask = (id) => {
@@ -118,23 +142,23 @@ function App() {
   const addPoints = (amount) => {
     setPoints((prev) => prev + amount);
     setCardsStudiedToday((prev) => prev + 1);
+    alert(`📚 +${amount} XP`);
   };
 
   // ======================
-  // DAILY GOALS
-  // ======================
-  useEffect(() => {
-    if (
-      tasksCompletedToday >= 3 &&
-      cardsStudiedToday >= 5 &&
-      !goalCompleted
-    ) {
-      setPoints((prev) => prev + 20);
-      setGoalCompleted(true);
-      alert("🎉 Daily Goal Completed!");
-    }
-  }, [tasksCompletedToday, cardsStudiedToday, goalCompleted]);
-
+// DAILY GOALS
+// ======================
+useEffect(() => {
+  if (
+    tasksCompletedToday >= 3 &&
+    cardsStudiedToday >= 5 &&
+    !goalCompleted
+  ) {
+    setPoints((prev) => prev + 20);
+    setGoalCompleted(true);
+    alert("🎉 Daily Goal Completed!");
+  }
+}, [tasksCompletedToday, cardsStudiedToday, goalCompleted]);
   // ======================
   // CHECK-IN
   // ======================
@@ -145,6 +169,7 @@ function App() {
     if (lastCheckIn === today) return;
 
     setPoints((prev) => prev + 5);
+    alert("🔥 +5 XP Check-in!");
 
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
@@ -172,10 +197,44 @@ function App() {
   const level = Math.floor(points / 50) + 1;
   const progress = ((points % 50) / 50) * 100;
 
+  // if no user, show login screen
+// if no user, show login screen
+if (!user) {
   return (
     <div className="container">
-      <h1>StudyQuest</h1>
+      <h1 className="logo">✨ StudyQuest</h1>
+      {/* show user's name */}
+<p>Welcome, {user} 👋</p>
 
+      <h3>Login</h3>
+
+      {/* input for name */}
+      <input
+        placeholder="Enter your name"
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            handleLogin(e.target.value);
+          }
+        }}
+      />
+
+      <p>Press Enter to continue</p>
+    </div>
+  );
+}
+
+  return (
+    <div className="container">
+<h1 className="logo">✨ StudyQuest</h1>
+{/* logout button */}
+<button
+  onClick={() => {
+    localStorage.removeItem("user"); // remove saved user
+    setUser(""); // reset user
+  }}
+>
+  Logout
+</button>
       <div className="card">
         <Stats points={points} streak={streak} level={level} />
 
@@ -185,8 +244,7 @@ function App() {
               style={{
                 width: `${progress}%`,
                 height: "100%",
-                background: "#4f46e5",
-              }}
+                background: "linear-gradient(to right, #a78bfa, #7c3aed)",              }}
             />
           </div>
           <p>{Math.floor(progress)}% to next level</p>

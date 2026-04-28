@@ -1,8 +1,7 @@
 body {
   margin: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f5f7fb;
-}
+background: linear-gradient(135deg, #f3e8ff, #e9d5ff);}
 
 .container {
   max-width: 600px;
@@ -14,8 +13,8 @@ body {
   background: white;
   padding: 20px;
   margin-bottom: 20px;
-  border-radius: 12px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  box-shadow: 0px 10px 25px rgba(124, 58, 237, 0.15);
 }
 
 h1 {
@@ -24,25 +23,32 @@ h1 {
 }
 
 button {
-  padding: 8px 12px;
+  padding: 10px 16px;
   margin: 5px;
   border: none;
-  border-radius: 8px;
-  background-color: #4f46e5;
+  border-radius: 12px;
+  background: linear-gradient(to right, #a78bfa, #7c3aed);
   color: white;
   cursor: pointer;
   transition: 0.2s;
+  font-weight: 500;
 }
 
 button:hover {
-  background-color: #4338ca;
+  transform: scale(1.05);
+  opacity: 0.9;
 }
 
 input {
-  padding: 8px;
+  padding: 10px;
   margin: 5px 5px 5px 0;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  outline: none;
+}
+
+input:focus {
+  border-color: #a78bfa;
 }
 
 .nav-buttons {
@@ -55,4 +61,13 @@ input {
   display: flex;
   justify-content: space-between;
   font-weight: bold;
+}
+.logo {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  background: linear-gradient(to right, #7c3aed, #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
 }
