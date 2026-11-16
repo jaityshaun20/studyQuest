@@ -202,7 +202,7 @@ useEffect(() => {
 if (!user) {
   return (
     <div className="container">
-      <h1 className="logo">✨ StudyQuest</h1>
+      <h1 className="logo">✨ StudyLite</h1>
       {/* show user's name */}
 <p>Welcome, {user} 👋</p>
 
